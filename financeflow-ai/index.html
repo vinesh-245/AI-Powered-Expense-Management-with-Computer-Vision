@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceFlow AI - Smart Expense Tracking & Financial Insights</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>FinanceFlow AI</h1>
+            </div>
+            <nav class="nav">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#expenses" class="nav-link">Expenses</a>
+                <a href="#insights" class="nav-link">AI Insights</a>
+                <a href="#budget" class="nav-link">Budget</a>
+            </nav>
+        </header>
+
+        <main class="main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="dashboard-grid">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            <h3>Current Balance</h3>
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="balance-amount">$12,450.00</div>
+                        <div class="balance-change positive">+2.5% from last month</div>
+                    </div>
+
+                    <div class="card expenses-card">
+                        <div class="card-header">
+                            <h3>Monthly Expenses</h3>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="expense-amount">$3,280.00</div>
+                        <div class="expense-breakdown">
+                            <div class="expense-item">
+                                <span class="category">Business</span>
+                                <span class="amount">$1,450</span>
+                            </div>
+                            <div class="expense-item">
+                                <span class="category">Personal</span>
+                                <span class="amount">$1,830</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card ai-insights-card">
+                        <div class="card-header">
+                            <h3>AI Recommendations</h3>
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="insights-list">
+                            <div class="insight-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Consider reducing subscription costs by 15%</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-trending-up"></i>
+                                <span>Invest surplus in high-yield savings</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Budget alert: Marketing spend 20% over limit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quick-actions-card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="actions-grid">
+                            <button class="action-btn" onclick="addExpense()">
+                                <i class="fas fa-plus"></i>
+                                Add Expense
+                            </button>
+                            <button class="action-btn" onclick="generateReport()">
+                                <i class="fas fa-file-alt"></i>
+                                Generate Report
+                            </button>
+                            <button class="action-btn" onclick="setBudget()">
+                                <i class="fas fa-target"></i>
+                                Set Budget
+                            </button>
+                            <button class="action-btn" onclick="aiAnalysis()">
+                                <i class="fas fa-brain"></i>
+                                AI Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expenses Section -->
+            <section id="expenses" class="section">
+                <div class="section-header">
+                    <h2>Expense Tracking</h2>
+                    <button class="btn-primary" onclick="addExpense()">
+                        <i class="fas fa-plus"></i> Add New Expense
+                    </button>
+                </div>
+
+                <div class="expense-form-container" id="expenseForm" style="display: none;">
+                    <form class="expense-form">
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" id="amount" placeholder="Enter amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="What was this expense for?" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="">AI will suggest category...</option>
+                                <option value="business">Business</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="office">Office Supplies</option>
+                                <option value="travel">Travel</option>
+                                <option value="meals">Meals</option>
+                                <option value="software">Software</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Save Expense</button>
+                            <button type="button" class="btn-secondary" onclick="cancelExpense()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="expenses-list">
+                    <div class="expense-item-card">
+                        <div class="expense-info">
+                            <div class="expense-description">Office Supplies - Notebooks & Pens</div>
+                            <div class="expense-meta">
+                                <span class="category-tag business">Business</span>
+                                <span class="date">Nov 22, 2024</span>
+                            </div>
+                        </div>
+                        <div class="expense-amount">-$45.99</div>
+                    </div>
+
+                    <div class="expense-item-card">
+                        <div class="expense-info">
+                            <div class="expense-description">LinkedIn Premium Subscription</div>
+                            <div class="expense-meta">
+                                <span class="category-tag marketing">Marketing</span>
+                                <span class="date">Nov 21, 2024</span>
+                            </div>
+                        </div>
+                        <div class="expense-amount">-$59.99</div>
+                    </div>
+
+                    <div class="expense-item-card">
+                        <div class="expense-info">
+                            <div class="expense-description">Client Lunch Meeting</div>
+                            <div class="expense-meta">
+                                <span class="category-tag meals">Meals</span>
+                                <span class="date">Nov 20, 2024</span>
+                            </div>
+                        </div>
+                        <div class="expense-amount">-$125.50</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Insights Section -->
+            <section id="insights" class="section">
+                <div class="section-header">
+                    <h2>AI Financial Insights</h2>
+                    <button class="btn-primary" onclick="refreshInsights()">
+                        <i class="fas fa-sync"></i> Refresh Analysis
+                    </button>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-card spending-pattern">
+                        <div class="insight-header">
+                            <h3>Spending Patterns</h3>
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="insight-content">
+                            <p>Your spending has increased 15% compared to last month, primarily in marketing and software subscriptions.</p>
+                            <div class="recommendation">
+                                <strong>Recommendation:</strong> Consider consolidating software tools to reduce monthly recurring costs.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card cash-flow">
+                        <div class="insight-header">
+                            <h3>Cash Flow Prediction</h3>
+                            <i class="fas fa-crystal-ball"></i>
+                        </div>
+                        <div class="insight-content">
+                            <p>Based on current trends, you'll have a positive cash flow of $2,150 by month-end.</p>
+                            <div class="recommendation">
+                                <strong>Opportunity:</strong> Consider investing the surplus in a short-term high-yield account.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card tax-optimization">
+                        <div class="insight-header">
+                            <h3>Tax Optimization</h3>
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="insight-content">
+                            <p>You have $1,850 in deductible business expenses this month.</p>
+                            <div class="recommendation">
+                                <strong>Action:</strong> Ensure all receipts are properly categorized for maximum tax benefits.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card budget-alerts">
+                        <div class="insight-header">
+                            <h3>Budget Alerts</h3>
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="insight-content">
+                            <div class="alert warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Marketing budget: 85% used (15 days remaining)
+                            </div>
+                            <div class="alert info">
+                                <i class="fas fa-info-circle"></i>
+                                Office supplies: 45% used (on track)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Budget Section -->
+            <section id="budget" class="section">
+                <div class="section-header">
+                    <h2>Budget Management</h2>
+                    <button class="btn-primary" onclick="createBudget()">
+                        <i class="fas fa-plus"></i> Create New Budget
+                    </button>
+                </div>
+
+                <div class="budget-overview">
+                    <div class="budget-card">
+                        <div class="budget-header">
+                            <h3>Monthly Budget Overview</h3>
+                            <span class="budget-period">November 2024</span>
+                        </div>
+                        <div class="budget-progress">
+                            <div class="budget-item">
+                                <div class="budget-category">
+                                    <span class="category-name">Marketing</span>
+                                    <span class="budget-amount">$850 / $1,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%;"></div>
+                                </div>
+                                <span class="progress-percentage">85%</span>
+                            </div>
+
+                            <div class="budget-item">
+                                <div class="budget-category">
+                                    <span class="category-name">Office Supplies</span>
+                                    <span class="budget-amount">$225 / $500</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%;"></div>
+                                </div>
+                                <span class="progress-percentage">45%</span>
+                            </div>
+
+                            <div class="budget-item">
+                                <div class="budget-category">
+                                    <span class="category-name">Software</span>
+                                    <span class="budget-amount">$320 / $400</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%;"></div>
+                                </div>
+                                <span class="progress-percentage">80%</span>
+                            </div>
+
+                            <div class="budget-item">
+                                <div class="budget-category">
+                                    <span class="category-name">Travel</span>
+                                    <span class="budget-amount">$150 / $600</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%;"></div>
+                                </div>
+                                <span class="progress-percentage">25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
