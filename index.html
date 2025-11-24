@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseAI Pro - AI-Powered Expense Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> ExpenseAI Pro</h1>
+                <p>AI-Powered Expense Tracking & Budget Analysis</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <div>
+                        <span class="stat-value" id="totalExpenses">$0</span>
+                        <span class="stat-label">Total Expenses</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <span class="stat-value" id="budgetUsed">0%</span>
+                        <span class="stat-label">Budget Used</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <span class="stat-value" id="aiInsights">0</span>
+                        <span class="stat-label">AI Insights</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="dashboard-grid">
+                <!-- AI Receipt Scanner -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-camera"></i> AI Receipt Scanner</h3>
+                        <span class="badge">OCR Powered</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drop receipt image here or click to upload</p>
+                            <input type="file" id="receiptUpload" accept="image/*" hidden>
+                        </div>
+                        <div class="processing-status" id="processingStatus" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>AI is analyzing your receipt...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Add Expense -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-plus-circle"></i> Quick Add Expense</h3>
+                    </div>
+                    <div class="card-content">
+                        <form id="expenseForm">
+                            <div class="form-group">
+                                <label for="amount">Amount ($)</label>
+                                <input type="number" id="amount" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="food">Food & Dining</option>
+                                    <option value="transport">Transportation</option>
+                                    <option value="utilities">Utilities</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" id="description" placeholder="Brief description">
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-plus"></i> Add Expense
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Budget Overview -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-pie"></i> Budget Overview</h3>
+                        <button class="btn-secondary" id="setBudgetBtn">
+                            <i class="fas fa-cog"></i> Set Budget
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="budgetChart" width="300" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- AI Insights -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lightbulb"></i> AI Insights</h3>
+                        <span class="badge ai-badge">Powered by AI</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insights-container" id="insightsContainer">
+                            <div class="insight-item">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Add some expenses to get AI-powered insights!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Expenses -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Expenses</h3>
+                        <div class="filter-controls">
+                            <select id="categoryFilter">
+                                <option value="all">All Categories</option>
+                                <option value="food">Food & Dining</option>
+                                <option value="transport">Transportation</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="expenses-list" id="expensesList">
+                            <div class="empty-state">
+                                <i class="fas fa-receipt"></i>
+                                <p>No expenses yet. Add your first expense above!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spending Trends -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Spending Trends</h3>
+                        <div class="time-filter">
+                            <button class="time-btn active" data-period="7">7 Days</button>
+                            <button class="time-btn" data-period="30">30 Days</button>
+                            <button class="time-btn" data-period="90">90 Days</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="trendsChart" width="800" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Budget Modal -->
+    <div class="modal" id="budgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Set Monthly Budget</h3>
+                <button class="close-btn" id="closeBudgetModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="budgetForm">
+                    <div class="form-group">
+                        <label for="monthlyBudget">Monthly Budget ($)</label>
+                        <input type="number" id="monthlyBudget" step="0.01" required>
+                    </div>
+                    <div class="category-budgets">
+                        <h4>Category Budgets (Optional)</h4>
+                        <div class="category-budget-item">
+                            <label>Food & Dining</label>
+                            <input type="number" id="foodBudget" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="category-budget-item">
+                            <label>Transportation</label>
+                            <input type="number" id="transportBudget" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="category-budget-item">
+                            <label>Entertainment</label>
+                            <input type="number" id="entertainmentBudget" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Budget</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
